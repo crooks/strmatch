@@ -66,3 +66,8 @@ func (m *Matcher) Match(s string) bool {
 	}
 	return false
 }
+
+// Report returns the number of string and regex entries in the Matcher
+func (m *Matcher) Report() (int, int) {
+	return len(m.s), len(m.r)
+}

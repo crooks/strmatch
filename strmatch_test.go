@@ -36,3 +36,32 @@ func TestMatcher(t *testing.T) {
 		t.Error("string \"barfoo\" should match the test Regex")
 	}
 }
+
+func TestEmpty(t *testing.T) {
+	m := NewMatcher()
+	if m.Match("EmptyTest") {
+		t.Error("Empty matcher should always return False")
+	}
+}
+
+func TestReport(t *testing.T) {
+	m := NewMatcher()
+	sn1, rn1 := m.Report()
+	if sn1 != 0 {
+		t.Errorf("Empty Matcher string should report zero.  Got=%d", sn1)
+	}
+	if rn1 != 0 {
+		t.Errorf("Empty Matcher Regular Expression should report zero.  Got=%d", rn1)
+	}
+	err := m.SAdd("bazz")
+	if err != nil {
+		t.Error(err)
+	}
+	sn2, rn2 := m.Report()
+	if sn2 != 1 {
+		t.Errorf("String matcher should report one entry.  Got=%d", sn2)
+	}
+	if rn2 != 0 {
+		t.Errorf("Empty Matcher Regular Expression should report zero.  Got=%d", rn2)
+	}
+}
